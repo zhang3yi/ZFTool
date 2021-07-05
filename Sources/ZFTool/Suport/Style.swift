@@ -8,12 +8,7 @@
 import Foundation
 import UIKit
 extension UIView {
-    public func style(
-        text:String? = nil,
-        textColor:UIColor? = nil,
-        font:UIFont? = nil,
-        alig:NSTextAlignment? = nil,
-        number:Int? = nil,
+    public func viewStyle(
         bgColor:UIColor? = nil,
         radius:CGFloat? = nil,
         borderW:CGFloat? = nil,
@@ -22,15 +17,10 @@ extension UIView {
         
         
         
-        return self.styleHelp(text:text,textColor: textColor,font: font,alignment: alig,numberOfLines: number,bgColor: bgColor, radius: radius, borderW: borderW, borderColor: bgColor,supView: supView)
+        return self.styleHelp(bgColor: bgColor, radius: radius, borderW: borderW, borderColor: bgColor,supView: supView)
     }
     
     private func styleHelp<T:UIView>(
-        text:String? = nil,
-        textColor:UIColor? = nil,
-        font:UIFont? = nil,
-        alignment:NSTextAlignment? = nil,
-        numberOfLines: Int? = nil,
         bgColor:UIColor? = nil,
         radius:CGFloat? = nil,
         borderW:CGFloat? = nil,
@@ -50,12 +40,6 @@ extension UIView {
                 self.layer.borderColor = borderColor?.cgColor
             }
         }
-        if self.isKind(of: UILabel.self) {
-            
-            self.styleLable(text: text, textColor: textColor, font: font,alignment: alignment,numberOfLines: numberOfLines)
-        }else if self.isKind(of: UIButton.self){
-            self.styleButton(text: text, textColor: textColor, font: font)
-        }
         
         if supView != nil {
             supView?.addSubview(self)
@@ -66,52 +50,86 @@ extension UIView {
         return view
     }
     
-    private func styleLable(
+    
+    
+    
+   
+    
+    
+    
+    
+}
+
+extension UILabel{
+    public func style(
         text:String? = nil,
         textColor:UIColor? = nil,
         font:UIFont? = nil,
         alignment:NSTextAlignment? = nil,
-        numberOfLines: Int? = nil)  {
+        numberOfLines: Int? = nil) -> UILabel {
         
-        let lb = self as! UILabel
         if text != nil {
-            lb.text = text
+            self.text = text
         }
         
         if textColor != nil {
-            lb.textColor = textColor
+            self.textColor = textColor
         }
         if font != nil {
-            lb.font = font!
+            self.font = font!
         }
         if alignment != nil {
-            lb.textAlignment = alignment!
+            self.textAlignment = alignment!
         }
         if numberOfLines != nil {
-            lb.numberOfLines = numberOfLines!
+            self.numberOfLines = numberOfLines!
         }
+        return self
     }
+}
+extension UIButton{
     
-    private func styleButton(
+    public func style(
         text:String? = nil,
         textColor:UIColor? = nil,
-        font:UIFont? = nil)  {
+        font:UIFont? = nil) -> UIButton  {
         
-        let btn = self as! UIButton
+        
         if text != nil {
-            btn.setTitle(text, for: .normal)
+            self.setTitle(text, for: .normal)
         }
         
         if textColor != nil {
-            btn.setTitleColor(textColor, for: .normal)
+            self.setTitleColor(textColor, for: .normal)
         }
         if font != nil {
-            btn.titleLabel?.font = font!
+            self.titleLabel?.font = font!
         }
+        return self
+    }
+    
+    public func styleImg(
+        _ img:String? = nil,
+        _ state:UIControl.State) -> UIButton  {
+        
+        
+        if img != nil {
+            self.setImage(IMG(img!), for: state)
+        }
+        return self
     }
 }
-
-
+extension UIImageView{
+    public func style(
+        _ img:String? = nil) -> UIImageView  {
+        
+        
+        if img != nil {
+            self.image = IMG(img!)
+        }
+        return self
+    }
+}
 // MARK: - 颜色
 extension UIColor{
     
@@ -125,6 +143,11 @@ extension UIColor{
     public class func hex(_ hex: Int) -> (UIColor) {
         
         return UIColor(red: ((CGFloat)((hex & 0xFF0000) >> 16)) / 255.0,green: ((CGFloat)((hex & 0xFF00) >> 8)) / 255.0,blue: ((CGFloat)(hex & 0xFF)) / 255.0,alpha: 1.0)
+    }
+    /// 16进制颜色
+    public class func hexa(_ hex: Int,a:CGFloat) -> (UIColor) {
+        
+        return UIColor(red: ((CGFloat)((hex & 0xFF0000) >> 16)) / 255.0,green: ((CGFloat)((hex & 0xFF00) >> 8)) / 255.0,blue: ((CGFloat)(hex & 0xFF)) / 255.0,alpha: a)
     }
     
 }
@@ -160,5 +183,13 @@ extension Int {
             }
             return font
         }
+    }
+    
+    
+    public var w:CGFloat {
+        return CGFloat(self)*ZF_ScaleW
+    }
+    public var h:CGFloat {
+        return CGFloat(self)*ZF_ScaleH
     }
 }

@@ -32,10 +32,11 @@ public class ZFToast:UIView {
     
     init() {
         super.init(frame: CGRect.zero)
-        _ = self.style(bgColor: UIColor.rgba(0, 0, 0, 0.8), radius: 5)
+        _ = self.viewStyle(bgColor: UIColor.rgba(0, 0, 0, 0.8), radius: 5)
 
         self.isHidden = true
-        titlelb = UILabel.init().style(textColor: .white,font: 15.font_n , alig:NSTextAlignment.center,number: 0,supView: self)
+        titlelb = UILabel.init()
+//            .style(textColor: .white,font: 15.font_n , alig:NSTextAlignment.center,number: 0)
         
         
     }
